@@ -1,11 +1,11 @@
 public class Tumbler {
     volatile private boolean status;
 
-    public void TumblerOn () {
+    public void tumblerOn() {
         status = true;
     }
 
-    public void TumblerOff () {
+    public void tumblerOff() {
         status = false;
     }
 
