@@ -1,15 +1,18 @@
 public class Main {
+
+    private static final int USER_DELAY = 2000;
+    private static final int TOY_DELAY = 100;
+
     public static void main(String[] args) throws InterruptedException {
 
         Tumbler tumbler = new Tumbler();
 
         Thread user = new Thread(() -> {
-            final int userDelay = 2000;
             for (int i = 1; i <= 5; i++) {
                 tumbler.tumblerOn();
                 System.out.println(i + ": Пользователь включил тумблер");
                 try {
-                    Thread.sleep(userDelay);
+                    Thread.sleep(USER_DELAY);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -17,13 +20,11 @@ public class Main {
         });
 
         Thread toy = new Thread(() -> {
-            final int toyDelay = 100;
-
             while (true) {
                 if(tumbler.isStatus()) {
                     tumbler.tumblerOff();
                     try {
-                        Thread.sleep(toyDelay);
+                        Thread.sleep(TOY_DELAY);
                     } catch (InterruptedException ignored) { }
                     System.out.println("Игрушка выключила тумблер");
                 }
@@ -32,6 +33,7 @@ public class Main {
 
         toy.setDaemon(true);
         toy.start();
+
         user.start();
         user.join();
     }
